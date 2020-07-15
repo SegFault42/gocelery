@@ -48,7 +48,7 @@ func (b *AMQPCeleryBackend) GetResult(taskID string) (*ResultMessage, error) {
 
 	queueName := strings.Replace(taskID, "-", "", -1)
 
-	args := amqp.Table{"x-expires": int32(86400000)}
+	args := amqp.Table{"x-expires": int32(7200000)}
 
 	_, err := b.QueueDeclare(
 		queueName, // name
@@ -102,7 +102,7 @@ func (b *AMQPCeleryBackend) SetResult(taskID string, result *ResultMessage) erro
 	// autodelete is automatically set to true by python
 	// (406) PRECONDITION_FAILED - inequivalent arg 'durable' for queue 'bc58c0d895c7421eb7cb2b9bbbd8b36f' in vhost '/': received 'true' but current is 'false'
 
-	args := amqp.Table{"x-expires": int32(86400000)}
+	args := amqp.Table{"x-expires": int32(7200000)}
 	_, err := b.QueueDeclare(
 		queueName, // name
 		true,      // durable
